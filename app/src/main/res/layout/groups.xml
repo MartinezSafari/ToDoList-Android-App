@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/groupsRecycleView "
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,7 +18,8 @@
         android:text="+ New Item"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
-        android:textColor="#01579B" />
+        android:textColor="#01579B"
+        tools:ignore="RtlCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
