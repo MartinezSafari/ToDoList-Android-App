@@ -5,6 +5,9 @@
       <map>
         <entry key="app/src/main/res/layout/bouton.xml" value="0.381025641025641" />
         <entry key="app/src/main/res/layout/groups.xml" value="0.36203703703703705" />
+        <entry key="app/src/main/res/layout/groups_row.xml" value="0.35384615384615387" />
+        <entry key="app/src/main/res/layout/items.xml" value="0.3548717948717949" />
+        <entry key="app/src/main/res/layout/items_row.xml" value="0.35384615384615387" />
       </map>
     </option>
   </component>
