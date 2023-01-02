@@ -11,8 +11,8 @@ class GroupsAdapter (private val list: List<Group>): RecyclerView.Adapter<Groups
     }
 
     override fun onBindViewHolder(holder: GroupsViewHolder, position: Int) {
-        val goup = list[position]
-        holder.bind(goup)
+        val group = list[position]
+        holder.bind(group)
     }
 
     override fun getItemCount(): Int = list.size
