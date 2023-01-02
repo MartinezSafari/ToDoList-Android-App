@@ -33,7 +33,7 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
     {
         val builder = AlertDialog.Builder(this)
 
-        builder.setTitle("New Group")
+         builder.setTitle("New Group")
         builder.setMessage("Please enter a name for yor group")
 
         val myInput= EditText(this)
@@ -60,6 +60,9 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
 
     override fun groupClicked(index: Int) {
         val intent= Intent(this, ItemsActivity::class.java)
+
+        intent.putExtra("groupIndex", index)
+
         startActivity(intent)
     }
 
