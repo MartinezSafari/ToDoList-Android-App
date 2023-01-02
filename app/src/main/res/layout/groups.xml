@@ -14,11 +14,13 @@
         android:layout_weight="0"
         android:background="#D8D4D4"
         android:gravity="center"
+        android:onClick="createNewGroup"
         android:paddingStart="10dp"
         android:text="+ New Item"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="#01579B"
+        android:textSize="20dp"
         tools:ignore="RtlCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
