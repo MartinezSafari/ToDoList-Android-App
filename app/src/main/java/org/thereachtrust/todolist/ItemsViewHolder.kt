@@ -26,7 +26,7 @@ class ItemsViewHolder (inflater: LayoutInflater, parent: ViewGroup):
         itemNameTextView!!.text= item.name
         itemCheckBox!!.isChecked= item.completed
 
-        // to be fixed
+
         if (item.completed)
         {
             itemNameTextView!!.paintFlags= itemNameTextView!!.paintFlags or

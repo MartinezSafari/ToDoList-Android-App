@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemsAdapter(private val group: Group) : RecyclerView.Adapter<ItemsViewHolder>()
+class ItemsAdapter(private val group: Group, listenerContext: OnItemClickListener) :
+    RecyclerView.Adapter<ItemsViewHolder>()
 {
+    private var myIterface: OnItemClickListener= listenerContext
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder
     {
         val inflater= LayoutInflater.from(parent.context)
@@ -15,6 +18,16 @@ class ItemsAdapter(private val group: Group) : RecyclerView.Adapter<ItemsViewHol
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         val item: Item= group.items[position]
         holder.bind(item)
+
+        holder.itemView.setOnClickListener{
+            myIterface.itemClicked(position)
+
+        }
+        holder.itemView.setOnLongClickListener {
+            myIterface.itemLongClicked(position)
+            true
+
+        }
     }
 
     override fun getItemCount(): Int = group.items.size
