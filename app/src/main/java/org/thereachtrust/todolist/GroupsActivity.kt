@@ -19,7 +19,8 @@ import java.util.zip.Inflater
 class GroupsActivity : AppCompatActivity(), OnGroupClickListener
 {
     private var groupsAdapter: GroupsAdapter?= null
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.groups)
 
@@ -29,6 +30,13 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
         groupsAdapter = GroupsAdapter (AppData.groups, this)
             groupsRecycleView.adapter= groupsAdapter
     }
+
+    override fun onResume()
+    {
+        super.onResume()
+        groupsAdapter!!.notifyDataSetChanged()
+    }
+
     fun createNewGroup(v:View)
     {
         val builder = AlertDialog.Builder(this)
@@ -66,9 +74,10 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
         startActivity(intent)
     }
 
-    override fun groupLongClicked(index: Int) {
-        TODO("Not yet implemented")
-        //Delete group
+    override fun groupLongClicked(index: Int)
+    {
+        AppData.groups.removeAt(index)
+        groupsAdapter!!.notifyItemRemoved(index)
     }
 }
 

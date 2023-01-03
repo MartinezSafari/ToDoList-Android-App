@@ -1,9 +1,15 @@
 package org.thereachtrust.todolist
 
+import android.app.Activity
+import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.items.*
+import java.security.KeyException
 
 class ItemsActivity : AppCompatActivity(), OnItemClickListener
 {
@@ -17,7 +23,8 @@ class ItemsActivity : AppCompatActivity(), OnItemClickListener
     }
 
     override fun itemLongClicked(index: Int) {
-        TODO("Not yet implemented")
+        thisGroup.items.removeAt(index)
+        itemsAdapter!!.notifyItemRemoved(index)
     }
 
 
@@ -38,6 +45,27 @@ class ItemsActivity : AppCompatActivity(), OnItemClickListener
          setSupportActionBar(toolbar)
          supportActionBar!!.setDisplayHomeAsUpEnabled(true)
          supportActionBar!!.setDisplayShowTitleEnabled(false)
+
+
+         newItemEditText.setOnKeyListener { view, keyCode, event ->
+             if (keyCode == KeyEvent.KEYCODE_ENTER)
+             {
+                 if( event.action== KeyEvent.ACTION_DOWN)
+                 {
+                     val name: String= newItemEditText.text.toString()
+                     val item= Item(name, false)
+                     thisGroup.items.add(item)
+                     itemsAdapter!!.notifyItemInserted(thisGroup.items.count())
+                     newItemEditText.text.clear()
+
+                     val inputManager= getSystemService(Activity.INPUT_METHOD_SERVICE)
+                     as InputMethodManager
+                     inputManager.hideSoftInputFromWindow(view.windowToken,0)
+                 }
+             }
+             false
+         }
+
      }
 
     override fun onSupportNavigateUp(): Boolean {
