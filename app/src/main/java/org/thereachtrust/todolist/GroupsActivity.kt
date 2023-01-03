@@ -72,6 +72,9 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
         intent.putExtra("groupIndex", index)
 
         startActivity(intent)
+
+        overridePendingTransition(R.anim.slide_in_right,
+            R.anim.slide_out_left)
     }
 
     override fun groupLongClicked(index: Int)
