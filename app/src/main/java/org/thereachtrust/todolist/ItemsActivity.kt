@@ -2,6 +2,7 @@ package org.thereachtrust.todolist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.items.*
 
 class ItemsActivity : AppCompatActivity() {
@@ -15,11 +16,14 @@ class ItemsActivity : AppCompatActivity() {
 
          toolBarTitle.text= thisGroup.name
 
+         itemsRecycleView.layoutManager= LinearLayoutManager(this)
+         var itemsAdapter= ItemsAdapter(thisGroup)
+         itemsRecycleView.adapter= itemsAdapter
+
          setSupportActionBar(toolbar)
          supportActionBar!!.setDisplayHomeAsUpEnabled(true)
          supportActionBar!!.setDisplayShowTitleEnabled(false)
-
-    }
+     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
