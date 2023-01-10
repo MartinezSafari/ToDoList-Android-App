@@ -15,8 +15,8 @@ class GroupsViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         groupCountTextView = itemView.findViewById(R.id.groupCountTextView)
 
     }
-    fun bind(group: Group) {
-        groupNameTextView!!.text= group.name
-        groupCountTextView!!.text= "${group.items.count()} items"
+    fun bind(groupWithItems: GroupWithItems) {
+        groupNameTextView!!.text= groupWithItems.group.name
+        groupCountTextView!!.text= "${groupWithItems.items.count()} items"
     }
 }

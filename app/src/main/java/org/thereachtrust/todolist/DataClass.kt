@@ -1,7 +1,24 @@
 package org.thereachtrust.todolist
 
+import androidx.room.*
 
-data class Item(val name: String, var completed: Boolean)
+@Entity
+data class Items(
+    @ColumnInfo (name= "item_name") val name: String,
+    @ColumnInfo (name= "group_name") val groupName: String,
+    var completed: Boolean)
 
-data class Group(val name: String, var items: MutableList<Item>)
+{
+    @PrimaryKey(autoGenerate = true) var id=0
+}
+@Entity
+data class Groups(@ColumnInfo (name= "group_name")val name: String)
+{
+    @PrimaryKey(autoGenerate = true) var id=0
+}
+
+data class GroupWithItems (@Embedded val group: Groups,
+                           @Relation (parentColumn = "group_name",
+                           entityColumn = "group_name")
+                           val items: MutableList<Items>)
 
