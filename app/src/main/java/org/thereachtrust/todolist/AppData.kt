@@ -1,20 +1,27 @@
 package org.thereachtrust.todolist
 
 class AppData {
-    companion object dataHolder{
-        var groups: MutableList<Group> = mutableListOf()
+    companion object DataHolder
+    {
+        var dbFileName= "todo_db"
+        lateinit var db: ToDoDatabase
 
-        fun initialize(){
-            val items1 = Item ("bread" ,false)
-            val items2 = Item ("sugar" ,false)
+        var groups: MutableList<GroupWithItems> = mutableListOf()
 
-            val items3 = Item ("paper" ,false)
-            val items4 = Item ("pen" ,false)
+        fun initialize()
 
-            val group1 = Group("Home", mutableListOf(items1, items2))
-            val group2 = Group("Office", mutableListOf(items3, items4))
+        {
+            val group1= Groups("Home")
+            val item1 = Items ("bread" ,group1.name,false)
+            val item2 = Items ("sugar" ,group1.name,false)
+            val groupWithItems1= GroupWithItems(group1, mutableListOf(item1, item2))
 
-            groups = mutableListOf(group1, group2)
+            val group2= Groups("Office")
+            val items3 = Items ("paper" ,group2.name,false)
+            val items4 = Items ("pen" ,group2.name,false)
+            val groupWithItems2= GroupWithItems(group2, mutableListOf(items3, items4))
+
+            groups = mutableListOf(groupWithItems1, groupWithItems2)
         }
     }
 }

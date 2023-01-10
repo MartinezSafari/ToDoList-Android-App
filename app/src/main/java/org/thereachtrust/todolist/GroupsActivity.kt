@@ -14,11 +14,28 @@ import androidx.appcompat.widget.DecorContentParent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.groups.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.lang.Exception
 import java.util.zip.Inflater
 
 class GroupsActivity : AppCompatActivity(), OnGroupClickListener
 {
     private var groupsAdapter: GroupsAdapter?= null
+
+    private fun databaseFileExist(): Boolean
+    {
+        return try {
+            File(getDatabasePath(AppData.dbFileName).absolutePath).exists()
+        }
+        catch (e:Exception){
+            false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -29,6 +46,40 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
         AppData.initialize()
         groupsAdapter = GroupsAdapter (AppData.groups, this)
             groupsRecycleView.adapter= groupsAdapter
+
+
+        AppData.db= ToDoDatabase.getDatabase(this)!!
+        if (databaseFileExist())
+        {
+            //read content from room
+            CoroutineScope(Dispatchers.IO).launch {
+                AppData.groups= AppData.db.todoDao().getGroupsWithItems()
+
+                withContext(Dispatchers.Main){
+                    groupsAdapter = GroupsAdapter (AppData.groups, this)
+                    groupsRecycleView.adapter= groupsAdapter
+
+                }
+            }
+        }
+        else {
+            //first time running
+            AppData.initialize()
+            groupsAdapter = GroupsAdapter(AppData.groups, this)
+            groupsRecycleView.adapter = groupsAdapter
+            CoroutineScope(Dispatchers.IO).launch {
+                for (groupWithItems in AppData.groups)
+                {
+                    AppData.db.todoDao().insertGroup(groupWithItems.group)
+
+                    for(item in groupWithItems.items)
+                    {
+                        AppData.db.todoDao().insertItem(item)
+                    }
+                }
+
+            }
+        }
     }
 
     override fun onResume()

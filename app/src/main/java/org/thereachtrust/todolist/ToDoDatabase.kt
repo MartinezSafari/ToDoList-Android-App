@@ -19,8 +19,7 @@ abstract class ToDoDatabase : RoomDatabase()
                synchronized(ToDoDatabase::class)
                {
                    instance = Room.databaseBuilder(context.applicationContext,
-                   ToDoDatabase::class.java,
-                   "temporary_name").build()
+                   ToDoDatabase::class.java,AppData.dbFileName).build()
                }
            }
             return instance
