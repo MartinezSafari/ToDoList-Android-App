@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemsAdapter(private val group: Group, listenerContext: OnItemClickListener) :
+class ItemsAdapter(private val groupWithItems: GroupWithItems , listenerContext: OnItemClickListener) :
     RecyclerView.Adapter<ItemsViewHolder>()
 {
     private var myIterface: OnItemClickListener= listenerContext
@@ -16,7 +16,7 @@ class ItemsAdapter(private val group: Group, listenerContext: OnItemClickListene
     }
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
-        val item: Item= group.items[position]
+        val item: Items= groupWithItems.items[position]
         holder.bind(item)
 
         holder.itemView.setOnClickListener{
@@ -30,6 +30,6 @@ class ItemsAdapter(private val group: Group, listenerContext: OnItemClickListene
         }
     }
 
-    override fun getItemCount(): Int = group.items.size
+    override fun getItemCount(): Int = groupWithItems.items.size
 
 }
