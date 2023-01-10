@@ -56,7 +56,8 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
                 AppData.groups= AppData.db.todoDao().getGroupsWithItems()
 
                 withContext(Dispatchers.Main){
-                    groupsAdapter = GroupsAdapter (AppData.groups, this)
+                    groupsAdapter = GroupsAdapter (AppData.groups,
+                        this@GroupsActivity)
                     groupsRecycleView.adapter= groupsAdapter
 
                 }
@@ -99,14 +100,23 @@ class GroupsActivity : AppCompatActivity(), OnGroupClickListener
         myInput.inputType= InputType.TYPE_CLASS_TEXT
         builder.setView(myInput)
 
-        builder.setPositiveButton("Save"){
+        builder.setPositiveButton("Save")
+        {
             dialogue, which ->
             val groupName: String = myInput.text.toString()
-            val newGroup= Group(groupName, mutableListOf())
 
-            AppData.groups.add(newGroup)
+            val newGroup= Groups(groupName)
+            val newGroupWithItems= GroupWithItems(newGroup, mutableListOf())
+
+            AppData.groups.add(newGroupWithItems)
             groupsAdapter!!.notifyItemInserted(AppData.groups.count())
+
+            CoroutineScope(Dispatchers.IO).launch {
+            AppData.db.todoDao().insertGroup(newGroup)
+
+            }
         }
+
 
         builder.setNegativeButton("Cancel"){
                 dialogue, which ->
